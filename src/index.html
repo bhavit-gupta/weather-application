@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link href="./output.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+
+<body
+  class="bg-[#0f172a] min-h-screen w-full text-white flex justify-center items-center py-6 md:py-10 px-4 md:px-10 relative overflow-x-hidden">
+
+  <!-- Background Blobs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[120px] -z-10"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-600/30 rounded-full blur-[120px] -z-10">
+  </div>
+  <div class="fixed top-[20%] right-[30%] w-[300px] h-[300px] bg-cyan-500/20 rounded-full blur-[100px] -z-10"></div>
+
+  <div class="max-w-7xl w-full flex flex-col lg:flex-row gap-6 items-stretch z-10">
+
+    <!-- Left Column: Search & Current Weather -->
+    <div id="heroSection" class="w-full lg:w-[32%] flex flex-col gap-6">
+
+      <!-- Search Bar -->
+      <div id="searchColumn" class="flex gap-2">
+        <input placeholder="Enter city name..." id="cityInput" value="Ludhiana" type="text"
+          class="glass-input flex-1 min-w-0 py-3 px-4 rounded-full text-lg shadow-md transition-all duration-300 hover:bg-white/30" />
+        <button id="getWeatherBtn"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-full shadow-md transition-all duration-300 active:scale-95">
+          Search
+        </button>
+      </div>
+
+      <!-- Current Weather Card -->
+      <div id="currentData"
+        class="glass-card w-full flex-1 p-4 sm:p-6 md:p-8 flex flex-col items-center text-center gap-4 md:gap-6 relative overflow-hidden justify-between animate-fade-in-up">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl -z-10"></div>
+
+        <div id="currentWeather" class="flex flex-col items-center mt-4">
+          <h2 class="text-2xl md:text-3xl lg:text-2xl xl:text-3xl font-light tracking-wide mb-2">Today</h2>
+          <img id="weatherImage" class="h-32 w-32 object-contain drop-shadow-2xl" src="" alt="Weather Icon">
+          <div id="temp"
+            class="text-5xl sm:text-7xl md:text-8xl lg:text-6xl xl:text-7xl font-bold mt-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+          </div>
+          <div id="weatherDesc"
+            class="text-xl md:text-2xl lg:text-xl xl:text-2xl font-medium opacity-90 mt-2 capitalize px-4 py-1 rounded-full bg-white/10 backdrop-blur-sm">
+          </div>
+          <div id="minMaxTemp" class="mt-6 rounded-xl p-4 w-full flex flex-col items-center justify-center gap-1">
+          </div>
+        </div>
+
+        <div class="w-full h-px bg-white/20 my-2"></div>
+
+        <!-- Miscellaneous Grid -->
+        <div id="miscellaneousCards" class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-3 md:gap-4 w-full">
+
+          <div
+            class="bg-white/5 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 min-h-[100px]">
+            <h3 class="text-sm uppercase tracking-wider opacity-70 mb-2">Feels Like</h3>
+            <span id="feelsLike" class="text-2xl font-bold"></span>
+            <p id="feelsLikeCaption" class="text-xs opacity-60 text-center mt-1"></p>
+          </div>
+
+          <div
+            class="bg-white/5 rounded-xl p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 min-h-[120px]">
+            <h3 class="text-sm uppercase tracking-wider opacity-70 mb-2">Humidity</h3>
+            <span id="humidity" class="text-2xl font-bold"></span>
+            <p id="humidityCaption" class="text-xs opacity-60 text-center mt-1"></p>
+          </div>
+
+
+
+          <div
+            class="bg-white/5 rounded-xl p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 min-h-[120px]">
+            <h3 class="text-sm uppercase tracking-wider opacity-70 mb-2">Cloud Cover</h3>
+            <span id="cloud" class="text-2xl font-bold"></span>
+          </div>
+
+          <div
+            class="bg-white/5 rounded-xl p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 min-h-[120px]">
+            <h3 class="text-sm uppercase tracking-wider opacity-70 mb-2">Pressure</h3>
+            <span id="pressure" class="text-2xl font-bold"></span>
+            <p class="text-xs opacity-60 text-center mt-1">mb</p>
+          </div>
+
+          <div
+            class="bg-white/5 rounded-xl p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 min-h-[120px]">
+            <h3 class="text-sm uppercase tracking-wider opacity-70 mb-2">Precipitation</h3>
+            <span id="precip" class="text-2xl font-bold"></span>
+            <p class="text-xs opacity-60 text-center mt-1">mm</p>
+          </div>
+
+          <div
+            class="bg-white/5 rounded-xl p-6 flex flex-col items-center justify-center transition-transform hover:scale-105 min-h-[120px]">
+            <h3 class="text-sm uppercase tracking-wider opacity-70 mb-2">UV Index</h3>
+            <span id="currentUv" class="text-2xl font-bold"></span>
+            <p id="currentUvCaption" class="text-xs opacity-60 text-center mt-1"></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Forecasts & Details -->
+    <div class="w-full lg:w-[64%] flex flex-col gap-6 animate-fade-in-up min-w-0">
+
+      <!-- Hourly Forecast -->
+      <div id="hourlyForecast" class="glass-card p-4 md:p-6 flex-none">
+        <h2 class="font-semibold text-lg mb-4 flex items-center gap-2">
+          Hourly Forecast
+        </h2>
+        <div id="hourlyForecastContainer" class="flex overflow-x-auto gap-4 pb-4 custom-scrollbar">
+          <!-- Dynamic Content -->
+        </div>
+      </div>
+
+      <!-- 3 Day Forecast & History -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+
+        <div id="forecast" class="glass-card p-4 md:p-6 flex flex-col">
+          <h2 class="font-semibold text-lg mb-4">3-Day Forecast</h2>
+          <div id="dayForecastContainer" class="flex flex-col gap-3 flex-1 overflow-auto no-scrollbar p-1">
+            <!-- Dynamic Content -->
+          </div>
+
+          <div class="w-full h-px bg-white/10 my-4"></div>
+
+          <div class="rounded-xl p-4 mt-auto flex flex-col justify-center min-h-[100px] transition-colors">
+            <div class="flex items-center justify-between w-full px-2">
+              <div class="flex flex-col gap-1">
+                <span class="text-xs uppercase tracking-wider opacity-70 flex items-center gap-1">
+                  Wind
+                </span>
+                <span id="windSpeed" class="text-2xl font-bold"></span>
+                <span id="windDirection" class="text-xs opacity-60"></span>
+              </div>
+              <div class="w-px h-10 bg-white/10 mx-4"></div>
+              <div class="flex flex-col items-end gap-1">
+                <span class="text-xs uppercase tracking-wider opacity-70">Max Gust</span>
+                <span id="maxWindSpeed" class="text-2xl font-bold"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="historicData" class="glass-card p-4 md:p-6 flex flex-col">
+          <h2 class="font-semibold text-lg mb-4">7-Day History</h2>
+          <div id="historicDataContainer"
+            class="flex flex-col gap-3 flex-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent no-scrollbar p-1">
+            <!-- Dynamic Content - Changed to vertical list likely for better fit in grid -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Row: Sun/Moon, UV, Min/Max -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-none">
+
+        <div class="glass-card p-4 md:p-6 flex flex-col gap-3">
+          <h2 class="font-semibold text-sm uppercase opacity-70">Astronomy</h2>
+          <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+            <span class="text-sm">Sunrise</span>
+            <span id="sunRise" class="font-bold text-sm"></span>
+          </div>
+          <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+            <span class="text-sm">Sunset</span>
+            <span id="sunSet" class="font-bold text-sm"></span>
+          </div>
+          <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+            <span class="text-sm">Moonrise</span>
+            <span id="moonRise" class="font-bold text-sm"></span>
+          </div>
+          <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+            <span class="text-sm">Moonset</span>
+            <span id="moonSet" class="font-bold text-sm"></span>
+          </div>
+        </div>
+
+        <div id="uvIndex" class="glass-card p-4 md:p-6">
+          <h2 class="font-semibold text-lg mb-4">UV Index Forecast</h2>
+          <div id="uvIndexContainer" class="flex flex-col gap-3">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
