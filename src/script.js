@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 
-    const API_KEY = "f872f972c6004a74a9b131043262001";
-
 
 
     const cityInput = document.getElementById("cityInput");
@@ -57,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    getWeather()
+    getWeather();
 
     cityBtn.addEventListener("click", getWeather);
 
@@ -75,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const city = cityInput.value;
 
-        fetch(`http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=3&aqi=yes`)
+        fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=3&aqi=yes`)
 
             .then(Response => Response.json())
             .then(data => {
@@ -405,7 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         historicData.forEach(value => {
 
-            fetch(`http://api.weatherapi.com/v1/history.json?key=${API_KEY}&q=${city}&dt=${value}`)
+            fetch(`https://api.weatherapi.com/v1/history.json?key=${API_KEY}&q=${city}&dt=${value}`)
                 .then(Response => Response.json())
                 .then(data => {
 
