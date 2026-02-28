@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather App</title>
   <link href="./output.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <script src="config.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 
 <body
-  class="bg-[#0f172a] min-h-screen w-full text-white flex justify-center items-center py-6 md:py-10 px-4 md:px-10 relative overflow-x-hidden">
+  class="bg-[#0f172a] min-h-screen w-full text-white flex flex-col items-center py-6 md:py-10 pb-20 px-4 md:px-10 relative overflow-x-hidden">
 
   <!-- Background Blobs -->
   <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[120px] -z-10"></div>
@@ -19,7 +20,7 @@
   </div>
   <div class="fixed top-[20%] right-[30%] w-[300px] h-[300px] bg-cyan-500/20 rounded-full blur-[100px] -z-10"></div>
 
-  <div class="max-w-7xl w-full flex flex-col lg:flex-row gap-6 items-stretch z-10">
+  <div class="max-w-7xl w-full flex flex-col lg:flex-row gap-6 items-stretch z-10 pb-20">
 
     <!-- Left Column: Search & Current Weather -->
     <div id="heroSection" class="w-full lg:w-[32%] flex flex-col gap-6">
@@ -191,6 +192,24 @@
     </div>
 
   </div>
+
+  <!-- Footer -->
+  <footer
+    class="fixed bottom-0 left-0 right-0 w-full border-t border-white/10 backdrop-blur-md bg-white/5 py-4 px-6 md:px-10 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <p class="text-sm text-white/60">
+        Designed and Created by
+        <a href="https://bhavitgupta.in" target="_blank" rel="noopener noreferrer"
+          class="text-blue-400 hover:text-blue-300 font-semibold transition-colors duration-200 hover:underline underline-offset-2">Bhavit
+          Gupta</a>
+      </p>
+      <a href="https://github.com/bhavitgupta" target="_blank" rel="noopener noreferrer"
+        class="text-white/60 hover:text-white transition-colors duration-200 text-xl" aria-label="GitHub">
+        <i class="fa-brands fa-github"></i>
+      </a>
+    </div>
+  </footer>
+
 </body>
 
 </html>
