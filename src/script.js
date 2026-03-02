@@ -55,9 +55,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+    // Initial weather fetch: Default to Ludhiana, then try Geolocation
     getWeather();
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            getWeather(`${lat},${lon}`);
+        }, (error) => {
+            console.log("Geolocation denied or failed. Staying with default city.");
+        });
+    }
 
-    cityBtn.addEventListener("click", getWeather);
+    cityBtn.addEventListener("click", () => getWeather());
 
     cityInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
@@ -65,18 +75,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 
-
-
-
-
-    function getWeather() {
-
-        const city = cityInput.value;
+    function getWeather(locationQuery) {
+        let city = locationQuery || cityInput.value;
+        if (!city) city = "Ludhiana"; // Fallback if input is empty
 
         fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=3&aqi=yes`)
 
             .then(Response => Response.json())
             .then(data => {
+                cityInput.value = data.location.name;
                 temp.innerText = `${data.current.temp_c}°C`;
 
                 weatherDesc.innerText = data.current.condition.text;
